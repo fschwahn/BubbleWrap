@@ -16,6 +16,7 @@ module BubbleWrap
           UIImagePickerControllerSourceTypeSavedPhotosAlbum
 
       MEDIA_TYPE_HASH = {movie: KUTTypeMovie, image: KUTTypeImage}
+      VIDEO_QUALITY_HASH = {high: UIImagePickerControllerQualityTypeHigh, medium: UIImagePickerControllerQualityTypeMedium, low: UIImagePickerControllerQualityTypeLow, resolution_640x480: UIImagePickerControllerQualityType640x480, resolution_1280x720: UIImagePickerControllerQualityTypeIFrame1280x720, resolution_960x540: UIImagePickerControllerQualityTypeIFrame960x540}
 
       CAMERA_LOCATIONS = [:front, :rear, :none]
 
@@ -74,6 +75,7 @@ module BubbleWrap
       #   allows_editing: true/false; default false
       #   animated: true/false; default true
       #   on_dismiss: lambda; default nil
+      #   video_quality: :high, :medium, :low, :resolution_640x480, :resolution_1280x720, :resolution_960x540; default :medium
       # }
       #
       # @param [UIViewController] view controller from which to present the image picker;
@@ -130,6 +132,7 @@ module BubbleWrap
         self.picker.sourceType = source_type
         self.picker.mediaTypes = media_types
         self.picker.allowsEditing = @options[:allows_editing]
+        self.picker.videoQuality = VIDEO_QUALITY_HASH[@options[:video_quality]]
 
         if source_type_readable == :camera && ![:front, :rear].member?(self.location)
           raise Error::INVALID_CAMERA_LOCATION, "Can't use camera location #{self.location} with source type :camera"
