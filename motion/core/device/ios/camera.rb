@@ -132,7 +132,10 @@ module BubbleWrap
         self.picker.sourceType = source_type
         self.picker.mediaTypes = media_types
         self.picker.allowsEditing = @options[:allows_editing]
-        self.picker.videoQuality = VIDEO_QUALITY_HASH[@options[:video_quality]]
+
+        if media_types.member? KUTTypeMovie
+          self.picker.videoQuality = VIDEO_QUALITY_HASH[@options[:video_quality]] if @options[:video_quality]
+        end
 
         if source_type_readable == :camera && ![:front, :rear].member?(self.location)
           raise Error::INVALID_CAMERA_LOCATION, "Can't use camera location #{self.location} with source type :camera"
