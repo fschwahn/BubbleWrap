@@ -76,6 +76,7 @@ module BubbleWrap
       #   animated: true/false; default true
       #   on_dismiss: lambda; default nil
       #   video_quality: :high, :medium, :low, :resolution_640x480, :resolution_1280x720, :resolution_960x540; default :medium
+      #   video_maximum_duration: NSTimeInterval; default: 600
       # }
       #
       # @param [UIViewController] view controller from which to present the image picker;
@@ -135,6 +136,7 @@ module BubbleWrap
 
         if media_types.member? KUTTypeMovie
           self.picker.videoQuality = VIDEO_QUALITY_HASH[@options[:video_quality]] if @options[:video_quality]
+          self.picker.videoMaximumDuration = @options[:video_maximum_duration] if @options[:video_maximum_duration]
         end
 
         if source_type_readable == :camera && ![:front, :rear].member?(self.location)
