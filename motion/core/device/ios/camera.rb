@@ -193,7 +193,7 @@ module BubbleWrap
           nice_key = k.gsub("UIImagePickerController", "").underscore.to_sym
           val = info[k]
           callback_info[nice_key] = val
-          info.delete k
+          # info.delete k
         }
 
         if media_type = callback_info[:media_type]
